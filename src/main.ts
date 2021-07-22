@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import csurf from 'csurf';
 import session from 'express-session';
 import SessionFileStore from 'session-file-store';
+import passport from 'passport';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -25,6 +26,8 @@ async function bootstrap() {
       saveUninitialized: false,
     }),
   );
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(csurf({ cookie: { httpOnly: true } }));
 
   await app.listen(APP_PORT);
