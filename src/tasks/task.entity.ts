@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TaskPriority } from './enums/task-priority.enum';
+import { User } from '../users/user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('tasks')
 export class Task {
@@ -20,4 +22,8 @@ export class Task {
 
   @Column({ default: false })
   done: boolean;
+
+  @Exclude()
+  @ManyToOne(() => User, (user) => user.tasks)
+  user: User;
 }
